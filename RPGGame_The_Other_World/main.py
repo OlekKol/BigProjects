@@ -1,13 +1,9 @@
+import time
 import os
-from Home import Home
 from move import Move
-
 os.system('clear')
-
-H = Home()
-H.info()
-
+M = Move()
+M.map_whole()
 class Main():
     def __init__(self) -> None:
         pass
-
