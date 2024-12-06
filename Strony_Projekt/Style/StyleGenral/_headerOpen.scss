@@ -1,0 +1,52 @@
+.header__menu--open {
+  width: 550px;
+  height: auto;
+  background-color: $color1;
+  border: 0.7em solid $color2;
+  display: none;
+  z-index: 10;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 15vh;
+  padding: 3em;
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8vh;
+    li {
+      border-bottom: 2px solid $color2;
+      button {
+        // https://www.bestcssbuttongenerator.com/#/14
+        box-shadow: 0px 1px 0px 0px #031879;
+        background: linear-gradient(to bottom, #0fcaa2 5%, #19d108 100%);
+        background-color: #8507da;
+        border-radius: 6px;
+        border: 1px solid #630303;
+        display: inline-block;
+        cursor: pointer;
+        color: #333333;
+        font-family: Arial;
+        font-size: $font4;
+        font-weight: bold;
+        padding: 6px 24px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #ffee66;
+      }
+      button:hover {
+        background: linear-gradient(to bottom, #ff0037 5%, #a30681 100%);
+        background-color: #a30808;
+      }
+      button:active {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+  a {
+    text-decoration: none;
+    font-size: $font6;
+  }
+}
