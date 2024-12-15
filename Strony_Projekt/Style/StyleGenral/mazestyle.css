@@ -1,0 +1,25 @@
+#maze {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section {
+  display: flex;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.path {
+  background-color: green;
+}
+
+.blockade {
+  background-color: gray;
+}
+
+.player {
+  background-color: red;
+}/*# sourceMappingURL=mazestyle.css.map */
