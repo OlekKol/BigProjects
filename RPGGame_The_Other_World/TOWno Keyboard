@@ -547,3 +547,484 @@ class Move():
                 lvl = int(which[1])
             
       
+                if lvl == 1:
+                    d = 1
+                elif lvl == 3:
+                    d = 3
+                elif lvl == 6:
+                    d = 6
+                    
+                Bike = ['I', 'Bike']
+                
+                Horse = ['III', 'Horse']
+                
+                Carriage = ['VI', 'Carriage']
+                
+                
+                
+                if d == 1:
+                    display = [Bike]
+                elif d == 3:
+                    display = [Horse]
+                elif d == 6:
+                    display = [Carriage]
+                
+                price = lvl**3 * 10
+
+                kind = 'T'
+                
+                return shop_display(display, price, players_money, kind)
+            
+            if which[0] == 'W':
+                after_the_buying = Weapon_shop(which, pm)
+            elif which[0] == 'M':
+                after_the_buying = Magic_shop(which, pm)
+            elif which[0] == 'F':
+                after_the_buying = Food_shop(which, pm)
+            elif which[0] == 'T':
+                after_the_buying = Travel_shop(which, pm)
+                
+            return after_the_buying  
+        
+        def awds(mapn ,x, y, where):
+            if where == 'Eq':
+                borderx = 8
+                bordery = 3
+            elif where == 'Dg':
+                borderx = 31
+                bordery = 55
+            else:
+                borderx = 38
+                bordery = 55
+            time.sleep(0.01)
+            # print('Can Move')
+            key = ''
+            
+            key = keyboard.read_key()
+            if keyboard.is_pressed('w') or keyboard.is_pressed('Up'):
+                if y - 1 >= 0 and mapn[y - 1][x] != 'C':
+                    return ("-1")
+            elif keyboard.is_pressed('s') or keyboard.is_pressed('Down'): 
+                
+                if y + 1 <= bordery and mapn[y + 1][x] != 'C':
+                    return "1"
+            elif keyboard.is_pressed('a') or keyboard.is_pressed('Left'):
+                
+                if x - 1 >= 0 and mapn[y][x - 1] != 'C':
+                    return "-10"
+            elif keyboard.is_pressed('d') or keyboard.is_pressed('Right'): 
+                
+                if x + 1 <= borderx and mapn[y][x + 1] != 'C':
+                    return "10"
+            elif keyboard.is_pressed('Enter'):
+                return 'Enter'
+            elif keyboard.is_pressed('e'):
+                return 'e'
+            elif keyboard.is_pressed('f'):
+                return 'f'
+            elif keyboard.is_pressed('Escape'):
+                m = menu()
+        
+        def mob_detector(Dungeon,xp,yp,rd,mob):
+            mobs_sight = []
+            player_in_mobs_sight = []
+            mis = 0
+            ms = 0
+            for vy in range(yp - rd, yp + rd + 1):
+                mobs_sight.append([])
+                for vx in range(xp - rd, xp + rd + 1):
+                    
+                    if vy < len(Dungeon) and vy > -1:
+                        if vx < len(Dungeon[0]) and vx > -1:
+                            mobs_sight[ms] += Dungeon[vy][vx]
+                            if str(Dungeon[vy][vx][0]) == mob:
+                                player_in_mobs_sight.append([])
+                                player_in_mobs_sight[mis] += vy, vx
+                                mis += 1
+                            # print(Dungeon[vy][vx])
+                ms += 1 
+            easy = [player_in_mobs_sight, mobs_sight]    
+            return easy
+        
+        def mobs(Dungeon, my, mx , yp, xp):
+            wy, wx = my, mx
+            where_will_it_go_if_the_way_is_valid = ''
+            while wy != yp or wx != xp:
+            
+                if wy > yp:
+                    wy -= 1
+                elif wy < yp:
+                    wy += 1
+                elif wx > xp:
+                    wx -= 1
+                elif wx < xp:
+                    wx += 1
+                if Dungeon[wy][wx] == '8':
+                    if where_will_it_go_if_the_way_is_valid == '':
+                        where_will_it_go_if_the_way_is_valid = (wy, wx)
+                        
+                    
+                elif Dungeon[wy][wx] == '7':
+                    return (my, mx)
+                
+                elif Dungeon[wy][wx][0] == '9':
+                    return (my, mx)
+                
+                elif Dungeon[wy][wx] == 'P':
+                    if where_will_it_go_if_the_way_is_valid == '':
+                        return (my, mx, 'fight')
+                
+            return where_will_it_go_if_the_way_is_valid        
+            
+            
+
+        def fight(mapn, x, y):
+            e = mob_detector(mapn,x,y,3,'9')
+            if len(e[0]) > 0:
+                if eq[3][0][0][0] == "[ ]":
+                    return ''
+                else: w_lvl = eq[3][0][0][1] 
+                    
+                Dmg = 1
+                if w_lvl == 'I':
+                    Dmg = 1
+                if w_lvl == "II":
+                    Dmg = 2
+                if w_lvl == 'III':
+                    Dmg = 3
+                if w_lvl == 'IV':
+                    Dmg = 4
+                if w_lvl == 'V':
+                    Dmg = 5
+                if w_lvl == 'VI':
+                    Dmg = 6
+                if w_lvl == 'VII':
+                    Dmg = 7
+                
+                Dmg = Dmg*25
+                
+                
+                list_of_opponents = []
+                for i in range(0, len(e[0])):
+                    # print(int(mapn[e[0][i][0]][e[0][i][1]][1]) * 20)
+                    Monsters_hp = (int(mapn[e[0][i][0]][e[0][i][1]][1]) * 20)
+                    list_of_opponents.append([])
+                    if len(mapn[e[0][i][0]][e[0][i][1]]) == 2:
+                        if Dmg >= Monsters_hp:
+                            list_of_opponents[i] += e[0][i], mapn[e[0][i][0]][e[0][i][1]], 'dead'    
+                        else:
+                            list_of_opponents[i] += e[0][i], mapn[e[0][i][0]][e[0][i][1]], Monsters_hp - Dmg
+                    else:
+                        if Dmg >= Monsters_hp:
+                            list_of_opponents[i] += e[0][i],  mapn[e[0][i][0]][e[0][i][1]], 'dead'    
+                        else:
+                            list_of_opponents[i] += e[0][i],  mapn[e[0][i][0]][e[0][i][1]], Monsters_hp - Dmg
+                        
+                return list_of_opponents
+                    
+                    
+        def print_(mapn, x, y, rd, spec, HP):
+            if rd != 'E':
+                blocks = {
+                    "You":chr(int('0xC6C3' , 16)),
+                    'Kira':'Ki',
+                    'Jufen':'Ju',
+                    'Sunui':'Su',
+                    'Lacai':'La',
+                    'Hasitisi':'Ha',
+                    'Vitisuri':'Vi',
+                    'Castle':chr(int('0x2B1B', 16)), 
+                    'Border':chr(int('0x2B1B', 16)),
+                    'Grass':chr(int('0x1F7E9', 16)),
+                    'Woods':chr(int('0x1F332', 16)),
+                    'White_Border':'⬜',
+                    'Shop':'🟫',
+                    'Road':chr(int('0x2B1B', 16)),
+                    'Mountains': '🪨 ',
+                    'Water':'🌊',
+                    'Bridge':"🟫",
+                    'Dungeon_Entrance':'⬜',
+                    'Dungeon_road':'🏻'
+                    
+                }
+                dim_w = len(mapn)
+                dim_k = len(mapn[0])
+                
+                # print("\033[A" * ((2 * rd) + 10))
+                os.system('clear')
+                
+            
+                for w in range(y - rd, y + rd + 1):
+                    line = ''
+                    for k in range(x - rd, x + rd + 1):
+                        if w == y and k == x:
+                            # if mapn == mapH or mapn == mapL or mapn == mapV:
+                            #     line += 'Y '
+                            # else:
+                            if spec == 'fight':
+                                line += '👾'
+                            else: line += blocks['You'] # You
+                            
+                        elif w < -1 or w >= dim_w + 1 or k < -1 or k >= dim_k + 1:
+                            line += blocks['Border'] # Border
+                        elif w == -1 or w == dim_w or k == -1 or k == dim_k:
+                            line += blocks['White_Border'] # White_Border
+                        # elif mapa[w][k] == "H":
+                        #     line += blocks['Home'] # Home
+                        elif mapn[w][k] == "K":
+                            line += blocks['Kira'] # Kira
+                        elif mapn[w][k] == "J":
+                            line += blocks['Jufen'] # Jufen
+                        elif mapn[w][k] == "S":
+                            line += blocks['Sunui'] # Sunui
+                        elif mapn[w][k] == "C":
+                            line += blocks['Castle'] # Castle
+                        elif mapn[w][k][0] == "E":
+                            line += blocks['Dungeon_Entrance'] # Dungeon_Entrance
+                        elif mapn[w][k] == "L":
+                            line += blocks['Lacai'] # Lacai
+                        elif mapn[w][k] == "H":
+                            line += blocks['Hasitisi'] # Hasitisi
+                        elif mapn[w][k] == "V":
+                            line += blocks['Vitisuri'] # Vitisuri
+                        elif mapn[w][k] == "1":
+                            line += blocks['Woods'] # Woods
+                        elif mapn[w][k] == "2":
+                            line += blocks['Mountains'] # Mountains
+                        elif mapn[w][k] == "3":
+                            line += blocks['Water'] # Water
+                        elif mapn[w][k] == "4":
+                            line += blocks['Bridge'] # Bridge
+                        elif mapn[w][k] == "5":
+                            line += blocks['Road'] # Road
+                        elif mapn[w][k] == "6":
+                            line += blocks['Shop'] # Shop
+                        elif mapn[w][k] == "7":
+                            line += blocks['Border'] # Dungeon_structure
+                        elif mapn[w][k] == "8":
+                            line += blocks['Dungeon_road'] # Dungeon_street
+                        elif mapn[w][k][0] == "9":
+                            if spec == 'fight':
+                                line += blocks['Dungeon_road'] # Dungeon_street
+                            else:line += "👾" # Mobs    
+                        elif mapn[w][k][0] == "M":
+                            line += 'M' + mapn[w][k][1] # Magic_entrance
+                        elif mapn[w][k][0] == "W":
+                            line += 'W' + mapn[w][k][1] # Weapons_entrance
+                        elif mapn[w][k][0] == "T":
+                            line += 'T' + mapn[w][k][1] # Transport_entrance
+                        elif mapn[w][k][0] == "F":
+                            line += 'F' + mapn[w][k][1] # Food_entrance
+                        elif mapn[w][k][0] == "g":
+                            line += 'g' + mapn[w][k][1] # Guild_Hall_entrance
+                        elif mapn[w][k][0] == "c":
+                            line += 'c' + mapn[w][k][1] # Casino_entrance
+                        elif mapn[w][k][0] == 'I' or mapn[w][k][0] == 'V' or mapn[w][k][0] == 'X':
+                            line += mapn[w][k]
+                        elif mapn[w][k][0] == 't':
+                            if mapn[w][k][1] == 'L':
+                                line += blocks['Dungeon_Entrance'] # From_Kingdom_to_world (Leave)
+                            else:
+                                line += mapn[w][k][1] + ' '
+                        
+                        
+                        else:
+                            line += blocks['Grass'] # Grass
+                
+                
+                    print(line,' ')
+                
+                print('♥️'* HP)
+                
+                line = ''
+                for cl in range(0, 9):
+                    for i in range(0, len(eq[3][cl])):
+                        line += str(eq[3][cl][i])
+                print(line)
+                
+                print(f"x - {x}")
+                print(f"y - {y}")
+
+            
+            
+            
+            else:
+                
+                
+                if spec == 1:
+                    Cursor = f'({str(eq[y][x][0])})'
+                else:
+                    Cursor = " ༓ "
+                
+                if x == 's' or y == 's':
+                    x = 0
+                    y = 0
+                    Cursor = str(eq[y][x][0])
+                
+                cl = 0
+                sq = 0
+
+                for sq in range (0,4):
+                    line = ''
+                    for cl in range(0, 9):
+                        if x == cl and y == sq:
+                            if str(eq[sq][cl][0]) == '[ ]':
+                                line += Cursor
+                            else:
+                                line += f'({str(eq[sq][cl][0])})'
+                            
+                        else:
+                            line += str(eq[sq][cl][0])
+                    print(line)
+
+        def move_eq(mapn,xw,yw,rd,p_eq,p_money):
+            e = 0
+            x = 0
+            y = 0
+            c = ''
+            spec = 0
+            while e != 1:
+                os.system('clear')
+                print_(p_eq, x, y, 'E' , spec, '')
+                c = awds(p_eq,x,y, 'Eq')
+                if c == "-1":
+                    y -= 1
+                elif c == '1':
+                    y += 1
+                elif c == '-10':
+                    x -= 1
+                elif c == '10':
+                    x += 1
+                elif c == 'Enter':
+                    if spec == 0:
+                        spec = 1
+                        xr = x
+                        yr = y
+                    else:
+                        if p_eq[y][x][0] == '[ ]':
+                            p_eq[y][x][0] = p_eq[yr][xr][0]
+                            p_eq[yr][xr][0] = '[ ]'
+                            spec = 0
+                        
+                elif c == 'e':
+
+                    the_returning_info = [mapn,xw,yw,rd,p_eq,p_money]
+                    return the_returning_info
+            
+        def move(mapn,x,y,rd,p_eq,p_money,if_dungeon_which_lvl):
+            HP = 10
+            os.system('clear')
+            p_eq_befor_anything = p_eq
+            
+            
+            c = ''
+
+            once = 0
+            if_eq = ''
+            change_maps = ''
+            print_(mapn, x, y, rd, '', HP)
+            while c != 'x' and change_maps == '' and if_eq == '' and p_eq_befor_anything == p_eq and HP > 0:
+                
+                if mapn == mapH or mapn == mapL or mapn == mapV:
+                    mapn[y][x] = '8'    
+                    c = awds(mapn, x, y, 'Dg')
+                else:
+                    c = awds(mapn, x, y, '')
+                xr = x
+                yr = y
+                coordinates_befor = [xr, yr]
+                if c == "-1":
+                    y -= 1
+                    once = 1
+                elif c == '1':
+                    y += 1
+                    once = 1
+                elif c == '-10':
+                    x -= 1
+                    once = 1
+                elif c == '10':
+                    x += 1
+                    once = 1
+                elif c == 'e':
+                    if once == 1:
+                        if_eq = 'Eq'
+                        change_maps = mapn
+                elif c == 'f':
+                    fight_reasoults = fight(mapn, x,y)
+                    if fight_reasoults != None:
+                        for i in range (0, len(fight_reasoults)):
+                            if fight_reasoults[i][2] == 'dead':
+                                mapn[fight_reasoults[i][0][0]][fight_reasoults[i][0][1]] = '8'
+                                change_maps = mapn
+                                ################################################### Place where Player gets loot from mobs
+                                ################################################### Place where Player gets loot from mobs
+                                ################################################### Place where Player gets loot from mobs
+                                ################################################### Place where Player gets loot from mobs
+                                ################################################### Place where Player gets loot from mobs
+                                loot = [fight_reasoults[i][1][1],'Wood']
+                                p_money += mapn[fight_reasoults[i][0][0]][fight_reasoults[i][0][1]][1] ** 2
+                                e_once = 0
+                                j = 3
+                                for l in range (0,4):
+                                    
+                                    for i in range (0, 9):
+                                        if e_once == 0:
+                                            if p_eq[j][i][0] == '[ ]':
+                                                p_eq[j][i][0] = loot
+                                                e_once = 1
+                                    j -= 1
+                            else:
+                                print(mapn[fight_reasoults[i][0][0]][fight_reasoults[i][0][1]][1])
+                                print(str(round((if_dungeon_which_lvl / 20) + 0.5)))
+                                mapn[fight_reasoults[i][0][0]][fight_reasoults[i][0][1]] = mapn[fight_reasoults[i][0][0]][fight_reasoults[i][0][1]][0] + str(round((if_dungeon_which_lvl / 20) + 0.5))
+                                
+                            
+                            
+                coordinates_after = [x, y]
+                if mapn == mapH or mapn == mapL or mapn == mapV:
+                
+                    ms = move_speed_next_move_checker(mapn, coordinates_after[0], coordinates_after[1], 1, rd)
+                else:
+                    ch = which_shop_enter_checker(mapn, coordinates_after[0], coordinates_after[1])
+                    ms = move_speed_next_move_checker(mapn, coordinates_after[0], coordinates_after[1], 0, rd)
+                time.sleep(0.01 * int(ms))
+
+                s = specials(mapn, coordinates_after[0], coordinates_after[1])
+                if s[0] == 'K' or s[0] == 'J' or s[0] == 'S':
+                    if s[0] == 'K':
+                        s = 'kira'
+                    elif s[0] == 'J':
+                        s = 'jufen'
+                    elif s[0] == 'S':
+                        s = 'sunui'
+                        
+                    enter = F.Moving_between_files(s)
+                    
+                    if enter == 1:
+                        u = kingdom_uncoder(s[0])
+                        change_maps = u
+                if s == 'EV' or s == 'EH' or s == 'EL':
+                    if s == 'EV':
+                        s = 'vitisuri'
+                    elif s == 'EH':
+                        s = 'hasitisi'
+                    elif s == 'EL':
+                        s = 'lacai'
+                    
+                    enter = F.Moving_between_files(s)
+                    
+                    if enter == 1:
+                        u = dungeon_uncoder(s[0])
+                        change_maps = u
+                    
+                if mapn == mapJ or mapn == mapK or mapn == mapS:
+                    if ms == 0: # Illegal move
+                        x = xr
+                        y = yr
+                    elif ms == 2: # Leaving the shop
+                        after_shop = shop(ch,p_eq,p_money)
+                        if after_shop[0] != 'nothing':
+                            once = 0
+                            for l in range (0,4):
+                                j = 3
+        
