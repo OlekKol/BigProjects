@@ -1027,4 +1027,246 @@ class Move():
                             once = 0
                             for l in range (0,4):
                                 j = 3
+                                for i in range (0, 9):
+                                    if once == 0:
+                                        if p_eq[j][i][0] == '[ ]':
+                                            p_eq[j][i][0] = after_shop[0][1]
+                                            once = 1
+                                j -= 1
+                        change_maps = mapn
+                
+                    
+                        
+                    elif ms == 9:
+                        change_maps = mapa
+                                
+                if mapn == mapH or mapn == mapL or mapn == mapV:
+                    if ms != 0 and ms!= 8: mapn[y][x] = 'P'
+                    else: mapn[yr][xr] = 'P'
+                    if ms == 0:
+                        x = xr
+                        y = yr
+                    pims = mob_detector(mapn,x,y,rd + 2, '9')
+                    if len(pims[0]) > 0:
+                        # print(len(pims[0]))
+                        for i in range (0, len(pims[0])):
+                            m = mobs(mapn, pims[0][i][0], pims[0][i][1], y, x)
+                            if len(m) == 3:
+                                HP -= int(mapn[pims[0][i][0]][pims[0][i][1]][1])
+                                print_(mapn, x, y, rd, 'fight', HP)
+                                time.sleep(1)
+                            mob = mapn[pims[0][i][0]][pims[0][i][1]]
+                            mapn[pims[0][i][0]][pims[0][i][1]] = '8'
+                            mapn[m[0]][m[1]] = mob
+                    
+                    if ms == 8: 
+                        
+                        if if_dungeon_which_lvl == '':
+                            if_dungeon_which_lvl = 1
+                        else:
+                            if_dungeon_which_lvl += 1
+                        change_maps = mapn
+                    if ms == 9:
+                        change_maps = mapa 
+                            
+                    print_(mapn, x, y, rd, '', HP)
+                    
+                else:
+                    print_(mapn, x, y, rd, '', HP)
+                
+            
+            time.sleep(0)
+            if HP <= 0:
+                print('You shall be revived tommorow at the exact same hour "D ')
+                time.sleep(60*60*24)
+            the_returning_info = [change_maps,xr,yr,rd,p_eq,p_money,if_eq,if_dungeon_which_lvl]
+            return the_returning_info
+
+            
+        def menu():
+            os.system('clear')
+            print('To go back to the game press : `esc` ')
+            
+            m = 0
+            while m == 0:
+                key = keyboard.read_key()
+                if keyboard.is_pressed('esc'):
+                    m = 1
+                    os.system('clear')
+                    return 0
+            
+            
         
+        
+        
+        
+        gen_map(mapa, 39, 56)
+        
+        # gen_map(mapJ, 39, 56)
+        
+        
+        # Map_whole(accual)
+        def Whole_map_generator():
+            gen_castle(mapa,4,12,'J')
+            gen_castle(mapa,7,34,'K')
+            gen_castle(mapa,31,34,'S')
+            gen_square(mapa,0,19,10,21,'m')
+            gen_moutains(mapa,11,21,19,'m','u')
+            gen_moutains(mapa,23,8,30,'m','d')
+            gen_triangle_l(mapa,31,17,34,20,'m','s')
+            gen_triangle_r(mapa,35,14,38,11,'w','s')
+            gen_triangle_r(mapa,35,31,38,28,'w','r')
+            gen_triangle_r(mapa,32,27,34,25,'w','s')
+            gen_triangle_r(mapa,22,31,25,28,'w','s')
+            gen_triangle_r(mapa,26,34,28,32,'w','r')
+            gen_square(mapa,35,15,38,27,'w')
+            gen_square(mapa,26,28,34,31,'w')
+            gen_square(mapa,22,32,25,55,'w')
+            gen_square(mapa,21,37,26,39,'b')
+            gen_square(mapa,0,39,12,41,'f')
+            gen_square(mapa,13,28,15,55,'f')
+            gen_square(mapa,16,23,22,29,'f')
+            gen_triangle_r(mapa,14,27,15,26,'f','s')
+            gen_special(mapa,16,30,'f')
+            gen_special(mapa,18,26,'0')
+            gen_special(mapa,19,26,'0')
+            gen_special(mapa,20,26,'0')
+            gen_special(mapa,19,25,'0')
+            gen_special(mapa,19,27,'0')
+            gen_special(mapa,22,29,'0')
+            gen_special(mapa,22,24,'0')
+            gen_special(mapa,22,23,'0')
+            gen_special(mapa,21,23,'0')
+            gen_special(mapa,16,24,'0')
+            gen_special(mapa,16,23,'0')
+            gen_special(mapa,17,23,'0')
+            gen_special(mapa,1,18,'m')
+            gen_special(mapa,3,18,'m')
+            gen_square(mapa,4,17,5,18,'m')
+            gen_special(mapa,9,16,'m')
+            gen_square(mapa,8,17,9,18,'m')
+            gen_special(mapa,10,18,'m')
+            
+            gen_dungeon(mapa,31,4,'L')
+            gen_dungeon(mapa,2,45,'H')
+            gen_dungeon(mapa,29,42,'V')
+        Whole_map_generator()
+        
+        mapJ = F.Generators('jufen', '')
+        # Kira(Kingdom)
+
+        mapK = F.Generators('kira', '')
+        # Sunui(Kingdom)
+        
+        mapS = F.Generators('sunui', '')
+        
+        # print_map(mapa)
+        mapH = F.Generators('hasitisi', 1)
+        
+        mapL = F.Generators('lacai', 1)
+        
+        mapV = F.Generators('vitisuri', 1)
+        
+        os.system('clear')
+        
+        
+        money = 100
+        eq = [[['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]']],
+              [['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]']],
+              [['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]']],
+              [[['I' ,'Sword']],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]'],['[ ]']]]
+        
+        maprememberer = 0
+        x = 19
+        y = 26
+        
+        xb = 0
+        yb = 0
+        
+        
+        z = 0
+        once = 0
+        while z <= 8:
+            was_in_eq_and_whants_again = 0
+            if once == 0:
+                w = move(mapa,x,y,4,eq,money, '')
+                xrw = w[1]
+                yrw = w[2]
+                once += 1
+            if w[-2] == 'Eq':
+                w = move_eq(w[0],xb,yb,4,eq,money)
+
+            if w[0] == mapa:
+                w = move(mapa,xrw,yrw,4,eq,money, '')
+                xrw = w[1]
+                yrw = w[2]
+                xb = w[1]
+                yb = w[2]
+            
+            money = w[5]
+            eq = w[4]
+            
+            if w[-2] == 'Eq':
+                was_in_eq_and_whants_again = 1
+            
+            
+            if was_in_eq_and_whants_again == 0:
+                
+            
+                if str(w[0]) == '7':
+                    z = 9
+                else:   
+                    if maprememberer != w[0]:
+                        if w[0] == mapH:
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapH = F.Generators('hasitisi', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                        if w[0] == mapS :
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapS = F.Generators('sunui', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                        if w[0] == mapV:
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapS = F.Generators('vitisuri', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                            
+                        else: w = move(w[0],18,53,5,eq,money, '')
+                        maprememberer = w[0]
+                        xb = w[1]
+                        yb = w[2]
+                    else:
+                        
+                        w = move(w[0],w[1],w[2],5,eq,money, w[-1])
+                        if w[0] == mapH:
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapH = F.Generators('hasitisi', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                        if w[0] == mapS :
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapS = F.Generators('sunui', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                        if w[0] == mapV:
+                            if w[-1] == '':
+                                w[-1] = 1
+                            mapS = F.Generators('vitisuri', w[-1])
+                            w[0] = mapH
+                            w = move(w[0],18,53,5,eq,money,w[-1])
+                        xb = w[1]
+                        yb = w[2]
+mapa = []
+# mapK = []
+# mapJ = []
+# mapS = []
+
+M = Move()
+M.map_whole()
