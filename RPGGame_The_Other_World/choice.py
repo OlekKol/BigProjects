@@ -1,4 +1,4 @@
-import keyboard
+
 import time
 
 from colorama import Fore, Back, Style
@@ -16,8 +16,8 @@ def WybierzZListy(lista, pytanie, szer = 50):
     
     # if OchronaKodu: 
     #     keyboard.press_and_release('ctrl+`')
-        while keyboard.is_pressed('enter'): 
-            print ("Puść [Enter]\033[A")
+        # while keyboard.is_pressed('enter'): 
+        #     print ("Puść [Enter]\033[A")
         if lista[0] == [0, "nic", 0, 0, 0]:
             for i in range(len(lista)):
                 if lista [0][1] == "nic":
@@ -46,15 +46,15 @@ def WybierzZListy(lista, pytanie, szer = 50):
                                 print(f"{Fore.BLACK + Back.WHITE }{(lista[i][0], lista[i][1], lista[i][2])} - Cena {lista[i][2] * P_Gems} Gems {Fore.WHITE + Back.BLACK}")
                             else:
                                 print ((f"{lista[i][0], lista[i][1], lista[i][2]} - Cena {lista[i][2] * P_Gems} Gems").ljust(szer))
-
-                        key = keyboard.read_key()
-                        if keyboard.is_pressed('up'):  
+                        key = input('>w< or >s< or >etr<')
+                        
+                        if key == 'w':  
                             if wybor > 0:
                                 wybor -= 1
-                        elif keyboard.is_pressed('down'): 
+                        elif key == 's': 
                             if wybor < len(lista)-1:
                                 wybor += 1
-                        elif keyboard.is_pressed('enter'): 
+                        elif key == 'etr': 
                             break
                     return wybor
         
@@ -76,15 +76,15 @@ def WybierzZListy(lista, pytanie, szer = 50):
 
 
 
-                key = keyboard.read_key()
-                if keyboard.is_pressed('up'):  
-
+                key = input('>w< or >s< or >etr<')
+                        
+                if key == 'w':  
                     if wybor > 0:
                         wybor -= 1
-                elif keyboard.is_pressed('down'): 
+                elif key == 's': 
                     if wybor < len(lista)-1:
                         wybor += 1
-                elif keyboard.is_pressed('enter'): 
+                elif key == 'etr': 
                     break
 
             

@@ -1,4 +1,4 @@
-import keyboard
+
 import os
 import math
 import time
@@ -362,21 +362,22 @@ class Move():
                             print('')
                         once = 1
                     print('')
-                    print('Enter - to buy')
+                    print('wtrite >>> etr <<< - to buy')
                     print('')
                     print('x - to Leave')
                     print('')
                     print_(p_eq, 's', 's', 'E' , 0, '')
-                    keyboard.read_key()
-                    if keyboard.is_pressed('Up'):
+                    eq_input = input('co chcesz wybrac.')
+                    
+                    if eq_input == 'w':
                         if z > 0 :
                             z -= 1
-                    elif keyboard.is_pressed('Down'):
+                    elif eq_input == 's':
                         if z < len(display) - 1:
                             z += 1
-                    elif keyboard.is_pressed('x'):
+                    elif eq_input == 'x':
                         exit_1_buy_2 += 1
-                    elif keyboard.is_pressed('Enter'):
+                    elif eq_input == 'etr':
                         exit_1_buy_2 += 2
                         
                 after_the_buying = ['nothing','nothing', players_money]
@@ -599,30 +600,30 @@ class Move():
             # print('Can Move')
             key = ''
             
-            key = keyboard.read_key()
-            if keyboard.is_pressed('w') or keyboard.is_pressed('Up'):
+            Minp = input('gdzie chcesz isc')
+            if Minp == 'w':
                 if y - 1 >= 0 and mapn[y - 1][x] != 'C':
                     return ("-1")
-            elif keyboard.is_pressed('s') or keyboard.is_pressed('Down'): 
+            elif Minp == 's': 
                 
                 if y + 1 <= bordery and mapn[y + 1][x] != 'C':
                     return "1"
-            elif keyboard.is_pressed('a') or keyboard.is_pressed('Left'):
+            elif Minp == 'a':
                 
                 if x - 1 >= 0 and mapn[y][x - 1] != 'C':
                     return "-10"
-            elif keyboard.is_pressed('d') or keyboard.is_pressed('Right'): 
+            elif Minp == 'd': 
                 
                 if x + 1 <= borderx and mapn[y][x + 1] != 'C':
                     return "10"
-            elif keyboard.is_pressed('Enter'):
+            elif Minp == 'etr':
                 return 'Enter'
-            elif keyboard.is_pressed('e'):
+            elif Minp == 'e':
                 return 'e'
-            elif keyboard.is_pressed('f'):
+            elif Minp == 'f':
                 return 'f'
-            elif keyboard.is_pressed('Escape'):
-                m = menu()
+            # elif Minp == 'Escape':
+            #     m = menu()
         
         def mob_detector(Dungeon,xp,yp,rd,mob):
             mobs_sight = []
@@ -1082,17 +1083,17 @@ class Move():
             return the_returning_info
 
             
-        def menu():
-            os.system('clear')
-            print('To go back to the game press : `esc` ')
+        # def menu():
+            # os.system('clear')
+            # print('To go back to the game press : `esc` ')
             
-            m = 0
-            while m == 0:
-                key = keyboard.read_key()
-                if keyboard.is_pressed('esc'):
-                    m = 1
-                    os.system('clear')
-                    return 0
+            # m = 0
+            # while m == 0:
+            #     key = keyboard.read_key()
+            #     if keyboard.is_pressed('esc'):
+            #         m = 1
+            #         os.system('clear')
+            #         return 0
             
             
         
