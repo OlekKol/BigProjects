@@ -1,0 +1,24 @@
+.joke {
+  padding: 1rem;
+  background-color: $color2;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.setup {
+  font-weight: 550;
+  margin-bottom: 0.4rem;
+}
+
+.delivery {
+  color: #362e2e;
+  font-weight: 540;
+}
+
+.joke-loading,
+.joke-error {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+  margin-top: 2rem;
+}

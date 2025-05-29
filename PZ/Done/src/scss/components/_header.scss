@@ -1,0 +1,26 @@
+.header {
+  width: 100vw;
+  background-color: $color2;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0px;
+
+  &__menu {
+    width: 100vw;
+    height: 10vh;
+    border: 0.7em solid $color2;
+    background-color: $color1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      width: 100%;
+      height: 0.8vh;
+      background-color: $color2;
+    }
+  }
+}
